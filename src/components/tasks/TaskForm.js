@@ -44,11 +44,11 @@ class TaskForm extends React.Component {
                 </form>
             </div>
 
-            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-                <Field name="userValue" component={this.renderInput} label="Enter name"/>
-                <Field name="description" component={this.renderInput} label="Enter Description"/>
-                <button className="ui button primary">Submit</button>
-            </form>
+            {/*<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">*/}
+                {/*<Field name="userValue" component={this.renderInput} label="Enter name"/>*/}
+                {/*<Field name="description" component={this.renderInput} label="Enter Description"/>*/}
+                {/*<button className="ui button primary">Submit</button>*/}
+            {/*</form>*/}
             </div>
         )
     }

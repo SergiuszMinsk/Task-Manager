@@ -1,5 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Route} from 'react-router-dom'
+import StreamForm from '../components/tasks/TaskForm'
 import TaskEdit from './tasks/TaskEdit'
 import TaskCreate from './tasks/TaskCreate'
 import TasksGet from './tasks/TasksGet'
@@ -24,6 +25,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="ui container">
+                <StreamForm/>
                 <BrowserRouter>
                     <div>
                         <Route path="/" exact component={TasksGet}/>
