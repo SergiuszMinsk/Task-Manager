@@ -1,8 +1,11 @@
 import React from 'react'
+import { createTask } from '../../actions'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 class TaskForm extends React.Component {
-    renderError = ( { error, touched } ) => {
+    renderError = ({ error, touched }) => {
         if (touched && error) {
             return (
                 <div className="ui error message">
@@ -12,43 +15,55 @@ class TaskForm extends React.Component {
         }
     };
 
-    onSubmit = (formValues) => {
-        this.props.onSubmit(formValues);
+    renderInput = ({ input, label, meta }) => {
+        const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+
+        return (
+            <div className="field">
+                <div className={className}>
+                    <input {...input} placeholder={label} autoComplete="off" />
+                    {this.renderError(meta)}
+                </div>
+            </div>
+
+        )
+    };
+
+    renderTextArea = ({input, label, meta}) => {
+        const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+
+        return (
+            <div className="field">
+                <div className={className}>
+                    <textarea {...input} placeholder={label} rows="10" cols="40"/>
+                    {this.renderError(meta)}
+                </div>
+            </div>
+        )
+    };
+
+    onSubmit = formValues => {
+        this.props.createTask(formValues);
     };
 
     render() {
+        const emailValidation = value =>
+            value &&
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
+                'Invalid email address' :
+            undefined;
+
         return (
-            <div>
             <div className="ui container offset-top">
-                <form onSubmit={this.onTaskSubmit} className="ui form">
-                    <div className="field">
-                        <input className="ui input" onChange={this.onInputChange} type="text" name="userValue" placeholder="Enter name..."/>
-                    </div>
-                    <div className="field">
-                        <input className="ui input" onChange={this.onInputChange} type="email" name="userEmail" placeholder="Enter email..."/>
-                    </div>
-                    <div className="field">
-                        <textarea name="userText" onChange={this.onInputChange} placeholder="Enter description..."></textarea>
-                    </div>
-                    <div className="field">
-                        <label htmlFor="file" className="ui icon button">
-                            <i className="file icon" />
-                            Open File
-                        </label>
-                        <input type="file" id="file" style={{ display: "none"}} />
-                    </div>
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
+                    <Field name="username" component={this.renderInput} label="Enter name..."/>
+                    <Field name="email" component={this.renderInput}  validate={emailValidation} label="Enter email..."/>
+                    <Field name="text" component={this.renderTextArea} label="Enter description..."/>
                     <div className="buttons-container">
                         <button className="ui button primary">Add Task</button>
-                        <button className="ui button" onClick={(event) => event.preventDefault()}>Preview</button>
+                        <Link to={'/task/preview'} className="ui button">Preview</Link>
                     </div>
                 </form>
-            </div>
-
-            {/*<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">*/}
-                {/*<Field name="userValue" component={this.renderInput} label="Enter name"/>*/}
-                {/*<Field name="description" component={this.renderInput} label="Enter Description"/>*/}
-                {/*<button className="ui button primary">Submit</button>*/}
-            {/*</form>*/}
             </div>
         )
     }
@@ -56,18 +71,28 @@ class TaskForm extends React.Component {
 
 const validate = formValues => {
     const errors = {};
-    if (!formValues.title) {
-        errors.title = `You must enter a title`;
+
+    if (!formValues.username) {
+        errors.username = `You must enter a name`;
     }
 
-    if (!formValues.description) {
-        errors.description = `You must enter a description`;
+    if (!formValues.email) {
+        errors.email = `You must enter email`;
+    }
+
+    if (!formValues.text) {
+        errors.text = `You must enter a description`;
     }
 
     return errors;
 };
 
+TaskForm = connect(
+    null, { createTask }
+)(TaskForm);
+
 export default reduxForm({
     form: 'taskForm',
+    destroyOnUnmount: false,
     validate
 })(TaskForm);

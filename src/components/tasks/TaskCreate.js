@@ -1,15 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { createTask } from '../../actions'
+import { Link } from 'react-router-dom'
 
 class TaskCreate extends React.Component {
-    onSubmit = formValues => {
-        this.props.createTask(formValues);
-    };
-
     render() {
-        return <div>TaskCreate</div>
+        return (
+                <Link to={`/tasks/new`} className="ui button primary">
+                    Create Task
+                </Link>
+        )
     }
 }
 
-export default connect(null, {createTask})(TaskCreate)
+export default TaskCreate;

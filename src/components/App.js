@@ -1,41 +1,42 @@
 import React from 'react'
-import {BrowserRouter, Route} from 'react-router-dom'
-import StreamForm from '../components/tasks/TaskForm'
-import TaskEdit from './tasks/TaskEdit'
+import { Router, Route, Switch } from 'react-router-dom'
+import TaskForm from '../components/tasks/TaskForm'
+import TaskEditForm from './tasks/TaskEditForm'
 import TaskCreate from './tasks/TaskCreate'
-import TasksGet from './tasks/TasksGet'
+import TasksList from './tasks/TasksList'
+import TaskPreview from './tasks/TaskPreview'
+import SubmitValidationForm from './login/SubmitValidationForm'
+import Header from './Header'
+import history from '../history'
 
 class App extends React.Component {
-    state = {
-        userValue: '',
-        userEmail: '',
-        userText: ''
-    };
-
-    onInputChange = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    };
-
-    onTaskSubmit = () => {
-
-    };
-
     render() {
         return (
-            <div className="ui container">
-                <StreamForm/>
-                <BrowserRouter>
+            <div className="ui container offset-top">
+                <Router history={history}>
                     <div>
-                        <Route path="/" exact component={TasksGet}/>
-                        <Route path="/tasks/new" exact component={TaskCreate}/>
-                        <Route path="/tasks/edit" exact component={TaskEdit}/>
+                    <Header />
+                        <Switch>
+                            <Route path="/" exact component={() =>
+                                <div>
+                                    <TaskCreate />
+                                    <TasksList />
+                                </div>}
+                            />
+                            <Route path="/tasks/new" exact component={() =>
+                                <div>
+                                <TaskForm />
+                                <TasksList />
+                            </div>} />
+                            <Route path="/login/" exact component={() => <SubmitValidationForm />} />
+                            <Route path="/task/preview" exact component={TaskPreview} />
+                            <Route path="/tasks/edit/:id" exact component={TaskEditForm} />
+                        </Switch>
                     </div>
-                </BrowserRouter>
+                </Router>
             </div>
         )
     }
 }
 
-export default App
+export default App;
