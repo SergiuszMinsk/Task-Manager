@@ -35,12 +35,13 @@ class TaskEditForm extends React.Component {
     renderCheckbox = ({ input, label }) => {
         const COMPLETED_TASK = 10;
 
-        return (<input
-                checked={this.props.status === COMPLETED_TASK}
+        return (
+            <input
                 className="ui checkbox" {...input}
                 id="completed"
                 placeholder={label}
                 type="checkbox"
+                defaultChecked={this.props.status === COMPLETED_TASK}
             />
         )
     };

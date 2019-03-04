@@ -51,7 +51,7 @@ class TasksList extends React.Component {
                 <div className="ui three column grid offset">
                     {this.renderList()}
                 </div>
-                <Pagination/>
+                <Pagination />
             </div>
 
         )
@@ -68,4 +68,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {getTasks, changeMode})(TasksList);
+export default connect(mapStateToProps, { getTasks, changeMode })(TasksList);

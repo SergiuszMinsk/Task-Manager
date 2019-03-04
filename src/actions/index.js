@@ -5,8 +5,9 @@ import {
     TASK_CREATE,
     TASKS_GET,
     TASK_EDIT,
+    TASKS_SORT,
     SIGN_IN,
-    SIGN_OUT
+    SIGN_OUT,
 }
 from './types';
 import tasks from '../apis/tasks'
@@ -77,7 +78,13 @@ export const getTasks = () => async dispatch => {
 };
 
 export const pageChange = pageNum => async dispatch => {
-    const response = await tasks.get(`/?developer=Siarhei&sort_field=id&sort_direction=asc&page=${pageNum}`);
+    const response = await tasks.get(`/?developer=Siarhei&page=${pageNum}`);
 
     dispatch({type: PAGE_CHANGE, payload: response.data.message})
+};
+
+export const sortTasks = (sortName, sortValue) => async dispatch => {
+    const response = await tasks.get(`/?developer=Siarhei&${sortName}=${sortValue}`);
+
+    dispatch({type: TASKS_SORT, payload: response.data.message});
 };

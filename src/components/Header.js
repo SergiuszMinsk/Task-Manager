@@ -13,9 +13,12 @@ class Header extends React.Component {
     render() {
         if (this.props.isSignedIn) {
             return (
-                <div className="login-button-container">
-                    <Link to={`/`} onClick={this.onSignOut} className="ui red button">Sign Out</Link>
+                <div>
+                    <div className="login-button-container">
+                        <Link to={`/`} onClick={this.onSignOut} className="ui red button">Sign Out</Link>
+                    </div>
                 </div>
+
             )
         }
         return (

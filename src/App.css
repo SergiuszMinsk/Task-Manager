@@ -4,6 +4,10 @@
     color: green;
 }
 
+.ui.selection.dropdown +  .ui.selection.dropdown {
+    margin-right: 15px;
+}
+
 .task-item + .task-item {
     margin-top: 10px;
 }
@@ -34,4 +38,9 @@
 
 .primary.button.edit-button {
     margin-top: 25px;
+}
+.sort-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
 }

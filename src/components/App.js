@@ -24,7 +24,8 @@ class App extends React.Component {
                                 </div>}
                             />
                             <Route path="/tasks/new" exact component={() =>
-                                <div>
+                            <div>
+                                <TaskCreate />
                                 <TaskForm />
                                 <TasksList />
                             </div>} />

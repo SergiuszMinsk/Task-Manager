@@ -6,8 +6,9 @@ import {
     TASK_CREATE,
     TASK_EDIT,
     TASKS_GET,
+    TASKS_SORT,
     SIGN_IN,
-    SIGN_OUT
+    SIGN_OUT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -31,6 +32,10 @@ export default (state = INITIAL_STATE, action) => {
         case TASK_EDIT:
             return {...state,
                 task_edit_mode: !state.task_edit_mode,
+            };
+        case TASKS_SORT:
+            return {...state,
+                tasks_list: {..._.mapKeys(action.payload.tasks, 'id')},
             };
         case PAGE_CHANGE:
             return {...state,
