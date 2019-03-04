@@ -3,6 +3,30 @@ import {Link} from 'react-router-dom'
 import TaskSort from './TaskSort';
 
 class TaskCreate extends React.Component {
+    state = {
+        isOpen: false
+    };
+
+    handleState = bool => {
+      this.setState({
+          isOpen: bool
+      })
+    };
+
+    renderButton() {
+        if(!this.state.isOpen) {
+            return (
+                <Link to={`/`} onClick={this.handleState(false)} className="ui button primary">
+                    Create Task
+                </Link>
+            )
+        }
+        return (
+            <Link to={`/tasks/new`} onClick={this.handleState} className="ui button primary">
+                Create Task
+            </Link>
+        )
+    }
 
     render() {
         let username = 'username';
@@ -23,9 +47,10 @@ class TaskCreate extends React.Component {
             {key: 'Descending', text: 'Descending', value: descending}
         ];
 
+
         return (
             <div>
-                <Link to={`/tasks/new`} className="ui button primary">
+                <Link to={`/tasks/new`}  className="ui button primary">
                     Create Task
                 </Link>
                 <div className="sort-container">
